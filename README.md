@@ -1,6 +1,12 @@
 = validator.nu
 
-Description goes here.
+ruby client library for the validator.nu HTML5 validation API
+
+== TODO
+
+* implement POST html document functionality of the API
+* transmit compressed data
+* output pure JSON ?
 
 == Note on Patches/Pull Requests
  
