@@ -1,6 +1,9 @@
 $:.unshift File.dirname(__FILE__)
 
 module Validator
+  
+  # http://about.validator.nu/#api
+  # http://wiki.whatwg.org/wiki/Validator.nu_Web_Service_Interfac
 
   # INPUT
   #
