@@ -2,7 +2,13 @@
 
 ruby client library for the validator.nu HTML5 validation API
 
-== TODO
+== Installation & Usage
+
+    gem install validator.nu
+    require 'validator.nu'
+    Validator.nu("http://google.com")
+
+== Todo
 
 * implement POST html document functionality of the API
 * transmit compressed data
