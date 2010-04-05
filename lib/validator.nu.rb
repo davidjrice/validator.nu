@@ -1,9 +1,12 @@
 $:.unshift File.dirname(__FILE__)
 
+require 'net/http'
+require 'cgi'
+
 module Validator
   
   # http://about.validator.nu/#api
-  # http://wiki.whatwg.org/wiki/Validator.nu_Web_Service_Interfac
+  # http://wiki.whatwg.org/wiki/Validator.nu_Web_Service_Interface
 
   # INPUT
   #
@@ -32,9 +35,42 @@ module Validator
   
 
   class << self
-    
+    class RemoteException < StandardError; end;
+
+    HOST = "validator.nu"
+    PORT = 80
+
     def nu(url_or_document)
-      "test" 
+      get(url_or_document)
+    end
+
+
+    def get(url)
+      begin
+        http = Net::HTTP.new(HOST, PORT)
+        # http.set_debug_output STDERR
+        # http.use_ssl = true if SSL
+        uri = "/?&doc=#{CGI::escape(url)}&out=json"
+        # headers = method.to_s == 'errors' ? { 'Content-Type' => 'application/x-gzip', 'Accept' => 'application/x-gzip' } : {}
+
+        # compressed_data = CGI::escape(Zlib::Deflate.deflate(data, Zlib::BEST_SPEED))
+        # STDERR.puts uri
+        response = http.start do |http|
+          http.get(uri)
+        end
+        
+        if response.kind_of? Net::HTTPSuccess
+          return response.body
+        else
+          STDERR.puts response.body.inspect
+          raise RemoteException.new("#{response.code}: #{response.message}")
+        end
+
+      rescue Exception => e
+        STDERR.puts "Error contacting validator.nu: #{e}"
+        STDERR.puts e.backtrace.join("\n"), 'debug'
+        raise e
+      end
     end
 
   end
