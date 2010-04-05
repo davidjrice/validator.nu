@@ -7,7 +7,7 @@ describe Validator do
   describe "Validator.nu" do
 
    it "should receive a no message result" do
-      fixture = File.open("#{File.dirname(__FILE__)}/fixtures/no-message-live.json").read
+      fixture = File.open("#{File.dirname(__FILE__)}/fixtures/no-message.json").read
 
       Validator.nu(
       "http://hsivonen.iki.fi/test/moz/messages-types/no-message.html"
