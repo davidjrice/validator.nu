@@ -34,7 +34,8 @@ Gem::Specification.new do |s|
      "spec/spec_helper.rb",
      "spec/validator_spec.rb",
      "test/helper.rb",
-     "test/test_validator.nu.rb"
+     "test/test_validator.nu.rb",
+     "validator.nu.gemspec"
   ]
   s.homepage = %q{http://github.com/davidjrice/validator.nu}
   s.rdoc_options = ["--charset=UTF-8"]
