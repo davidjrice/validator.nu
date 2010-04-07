@@ -38,23 +38,26 @@ module Validator
     class RemoteException < StandardError; end;
 
     HOST = "validator.nu"
-    PORT = 80
+    PORT = 80   
 
-    def nu(url_or_document)
-      get(url_or_document)
+    def nu(url_or_document, *options={})
+      get(url_or_document, options)
     end
 
 
+    # TODO - some implementation notes.
+    # http.set_debug_output STDERR
+    # http.use_ssl = true if SSL
+    # headers = method.to_s == 'errors' ? { 'Content-Type' => 'application/x-gzip', 'Accept' => 'application/x-gzip' } : {}
+    # compressed_data = CGI::escape(Zlib::Deflate.deflate(data, Zlib::BEST_SPEED))
+    # STDERR.puts uri
     def get(url)
       begin
-        http = Net::HTTP.new(HOST, PORT)
-        # http.set_debug_output STDERR
-        # http.use_ssl = true if SSL
+        host = options[:host] || HOST
+        port = options[:port] || PORT
+        http = Net::HTTP.new(host, port)
         uri = "/?&doc=#{CGI::escape(url)}&out=json"
-        # headers = method.to_s == 'errors' ? { 'Content-Type' => 'application/x-gzip', 'Accept' => 'application/x-gzip' } : {}
 
-        # compressed_data = CGI::escape(Zlib::Deflate.deflate(data, Zlib::BEST_SPEED))
-        # STDERR.puts uri
         response = http.start do |http|
           http.get(uri)
         end

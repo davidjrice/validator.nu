@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Rice"]
-  s.date = %q{2010-04-06}
+  s.date = %q{2010-04-07}
   s.description = %q{ruby client library for the validator.nu HTML5 validation API}
   s.email = %q{me@davidjrice.co.uk}
   s.extra_rdoc_files = [
