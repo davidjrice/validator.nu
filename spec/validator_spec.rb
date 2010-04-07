@@ -63,5 +63,6 @@ describe Validator do
         "http://hsivonen.iki.fi/test/moz/messages-types/fatal.xhtml"
       ).should == fixture
     end
+
   end
 end

@@ -40,7 +40,7 @@ module Validator
     HOST = "validator.nu"
     PORT = 80   
 
-    def nu(url_or_document, *options={})
+    def nu(url_or_document, options={})
       get(url_or_document, options)
     end
 
@@ -51,11 +51,12 @@ module Validator
     # headers = method.to_s == 'errors' ? { 'Content-Type' => 'application/x-gzip', 'Accept' => 'application/x-gzip' } : {}
     # compressed_data = CGI::escape(Zlib::Deflate.deflate(data, Zlib::BEST_SPEED))
     # STDERR.puts uri
-    def get(url)
+    def get(url, options)
       begin
         host = options[:host] || HOST
         port = options[:port] || PORT
         http = Net::HTTP.new(host, port)
+        STDERR.puts host
         uri = "/?&doc=#{CGI::escape(url)}&out=json"
 
         response = http.start do |http|
