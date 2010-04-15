@@ -38,8 +38,10 @@ module Validator
   class << self
     class RemoteException < StandardError; end;
 
+    CONTENT_ENCODING = "UTF-8"
+    CONTENT_TYPE = "text/html; charset=utf-8"
     HOST = "validator.nu"
-    PORT = 80   
+    PORT = 80
 
     def nu(url_or_document, options={})
       begin
@@ -91,9 +93,12 @@ module Validator
       begin
         host = options[:host] || HOST
         port = options[:port] || PORT
+        content_type = options[:content_type] || CONTENT_TYPE
+        content_encoding = options[:content_encoding] || CONTENT_ENCODING
+
         http = Net::HTTP.new(host, port)
         uri = "/?out=json"
-        headers = { 'Content-Type' => 'application/xhtml+xml' }
+        headers = { 'Content-Type' => content_type, 'Content-Encoding' => content_encoding }
         # TODO allow setting of an option for the post content-type
 
         response = http.start do |http|

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox='0 0 100 100'>
+  <title>Dispatch on root namespace</title>
+  <defs>
+    <circle id='thecircle' fill='green' cx='0' cy='0' r='20'/>
+  </defs>
+  <use xlink:href='#thecircle' x='20' y='20'/>
+  <use xlink:href='#thecircle' x='80' y='80'/>
+</svg>
+
