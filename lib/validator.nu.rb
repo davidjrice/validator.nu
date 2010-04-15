@@ -99,7 +99,6 @@ module Validator
         http = Net::HTTP.new(host, port)
         uri = "/?out=json"
         headers = { 'Content-Type' => content_type, 'Content-Encoding' => content_encoding }
-        # TODO allow setting of an option for the post content-type
 
         response = http.start do |http|
           http.post(uri, document, headers) 
