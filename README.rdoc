@@ -24,6 +24,7 @@ ruby client library for the validator.nu HTML5 validation API
     
 == Todo
 
+* gzip Accept-Encoding to enable gzip transport of the response from the validator.
 * output pure JSON ?
 
 == Note on Patches/Pull Requests
