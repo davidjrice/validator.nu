@@ -2,6 +2,7 @@ $:.unshift File.dirname(__FILE__)
 
 require 'net/http'
 require 'cgi'
+require 'uri'
 
 module Validator
   
@@ -41,7 +42,17 @@ module Validator
     PORT = 80   
 
     def nu(url_or_document, options={})
-      get(url_or_document, options)
+      begin
+        uri = URI.parse(url_or_document)
+        
+        if uri.class == URI::Generic
+          post(url_or_document, options)          
+        else
+          get(url_or_document, options)          
+        end
+      rescue URI::InvalidURIError
+        post(url_or_document, options)
+      end
     end
 
 
@@ -56,11 +67,37 @@ module Validator
         host = options[:host] || HOST
         port = options[:port] || PORT
         http = Net::HTTP.new(host, port)
-        STDERR.puts host
         uri = "/?&doc=#{CGI::escape(url)}&out=json"
 
         response = http.start do |http|
           http.get(uri)
+        end
+        
+        if response.kind_of? Net::HTTPSuccess
+          return response.body
+        else
+          STDERR.puts response.body.inspect
+          raise RemoteException.new("#{response.code}: #{response.message}")
+        end
+
+      rescue Exception => e
+        STDERR.puts "Error contacting validator.nu: #{e}"
+        STDERR.puts e.backtrace.join("\n"), 'debug'
+        raise e
+      end
+    end
+
+    def post(document, options)
+      begin
+        host = options[:host] || HOST
+        port = options[:port] || PORT
+        http = Net::HTTP.new(host, port)
+        uri = "/?out=json"
+        headers = { 'Content-Type' => 'application/xhtml+xml' }
+        # TODO allow setting of an option for the post content-type
+
+        response = http.start do |http|
+          http.post(uri, document, headers) 
         end
         
         if response.kind_of? Net::HTTPSuccess

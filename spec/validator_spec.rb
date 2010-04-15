@@ -4,7 +4,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 describe Validator do
 
 
-  describe "Validator.nu" do
+  describe "Validator.nu, get -ing" do
 
    it "should receive a no message result" do
       fixture = File.open("#{File.dirname(__FILE__)}/fixtures/no-message.json").read
@@ -65,4 +65,15 @@ describe Validator do
     end
 
   end
+
+  describe "Validator.nu, post -ing" do
+    
+    it "should receive a fatal error result" do
+      fixture = File.open("#{File.dirname(__FILE__)}/fixtures/fatal-error-post.json").read
+      html_fixture = File.open("#{File.dirname(__FILE__)}/fixtures/fatal-error.html").read
+      Validator.nu( html_fixture ).should == fixture
+    end
+
+  end
+
 end
