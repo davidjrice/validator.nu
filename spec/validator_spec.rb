@@ -111,4 +111,12 @@ describe Validator do
 
   end
 
+  it "Validator.nu posting with gzip" do
+    fixture = File.open("#{File.dirname(__FILE__)}/fixtures/info-post.json").read
+    html_fixture = File.open("#{File.dirname(__FILE__)}/fixtures/info.svg").read
+
+    Validator.nu(html_fixture, :content_type => 'image/svg+xml', :gzip => true).should == fixture
+
+  end
+
 end

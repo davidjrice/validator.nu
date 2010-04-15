@@ -3,6 +3,7 @@ $:.unshift File.dirname(__FILE__)
 require 'net/http'
 require 'cgi'
 require 'uri'
+require 'zlib'
 
 module Validator
   
@@ -41,6 +42,7 @@ module Validator
     CONTENT_ENCODING = "UTF-8"
     CONTENT_TYPE = "text/html; charset=utf-8"
     HOST = "validator.nu"
+    GZIP = false
     PORT = 80
 
     def nu(url_or_document, options={})
@@ -95,6 +97,16 @@ module Validator
         port = options[:port] || PORT
         content_type = options[:content_type] || CONTENT_TYPE
         content_encoding = options[:content_encoding] || CONTENT_ENCODING
+        gzip = options[:gzip] || GZIP
+
+        if gzip
+          content_encoding = 'gzip'
+          output = StringIO.new
+          gz = Zlib::GzipWriter.new(output)
+          gz.write(document)
+          gz.close
+          document = output.string
+        end
 
         http = Net::HTTP.new(host, port)
         uri = "/?out=json"
