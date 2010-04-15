@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Rice"]
-  s.date = %q{2010-04-07}
+  s.date = %q{2010-04-15}
   s.description = %q{ruby client library for the validator.nu HTML5 validation API}
   s.email = %q{me@davidjrice.co.uk}
   s.extra_rdoc_files = [
@@ -24,12 +24,25 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "lib/validator.nu.rb",
+     "spec/fixtures/fatal-error-post.json",
+     "spec/fixtures/fatal-error.html",
      "spec/fixtures/fatal-error.json",
+     "spec/fixtures/info-post.json",
      "spec/fixtures/info.json",
+     "spec/fixtures/info.svg",
+     "spec/fixtures/no-message-post.json",
+     "spec/fixtures/no-message.html",
      "spec/fixtures/no-message.json",
+     "spec/fixtures/non-document-error-post.json",
      "spec/fixtures/non-document-error.json",
+     "spec/fixtures/precise-error-post.json",
+     "spec/fixtures/precise-error.html",
      "spec/fixtures/precise-error.json",
+     "spec/fixtures/range-error-post.json",
+     "spec/fixtures/range-error.html",
      "spec/fixtures/range-error.json",
+     "spec/fixtures/warning-post.json",
+     "spec/fixtures/warning.html",
      "spec/fixtures/warning.json",
      "spec/spec_helper.rb",
      "spec/validator_spec.rb",
