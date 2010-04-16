@@ -45,20 +45,13 @@ module Validator
     GZIP = false
     PORT = 80
 
-    def nu(url_or_document, options={})
-      begin
-        uri = URI.parse(url_or_document)
-        
-        if uri.class == URI::Generic
-          post(url_or_document, options)          
-        else
-          get(url_or_document, options)          
-        end
-      rescue URI::InvalidURIError
-        post(url_or_document, options)
+    def nu(uri_or_document, options={})
+      if uri_or_document.kind_of?(URI::HTTP)
+        get(uri_or_document, options)          
+      else
+        post(uri_or_document, options)          
       end
     end
-
 
     # TODO - some implementation notes.
     # http.set_debug_output STDERR
@@ -71,7 +64,7 @@ module Validator
         host = options[:host] || HOST
         port = options[:port] || PORT
         http = Net::HTTP.new(host, port)
-        uri = "/?&doc=#{CGI::escape(url)}&out=json"
+        uri = "/?&doc=#{CGI::escape(url.to_s)}&out=json"
 
         response = http.start do |http|
           http.get(uri)

@@ -10,7 +10,7 @@ describe Validator do
       fixture = File.open("#{File.dirname(__FILE__)}/fixtures/no-message.json").read
 
       Validator.nu(
-      "http://hsivonen.iki.fi/test/moz/messages-types/no-message.html"
+      URI.parse("http://hsivonen.iki.fi/test/moz/messages-types/no-message.html")
       ).should == fixture
     end
 
@@ -20,7 +20,7 @@ describe Validator do
 
 
       Validator.nu(
-      "http://hsivonen.iki.fi/test/moz/messages-types/info.svg"
+      URI.parse("http://hsivonen.iki.fi/test/moz/messages-types/info.svg")
       ).should == fixture
     end
 
@@ -29,7 +29,7 @@ describe Validator do
 
 
       Validator.nu(
-      "http://hsivonen.iki.fi/test/moz/messages-types/warning.html"
+      URI.parse("http://hsivonen.iki.fi/test/moz/messages-types/warning.html")
       ).should == fixture
     end
 
@@ -38,7 +38,7 @@ describe Validator do
 
 
       Validator.nu(
-      "http://hsivonen.iki.fi/test/moz/messages-types/404.html"
+      URI.parse("http://hsivonen.iki.fi/test/moz/messages-types/404.html")
       ).should == fixture
     end
 
@@ -46,21 +46,21 @@ describe Validator do
       fixture = File.open("#{File.dirname(__FILE__)}/fixtures/precise-error.json").read
 
       Validator.nu(
-      "http://hsivonen.iki.fi/test/moz/messages-types/precise-error.html"
+      URI.parse("http://hsivonen.iki.fi/test/moz/messages-types/precise-error.html")
       ).should == fixture
     end
 
     it "should receive a range error result" do
       fixture = File.open("#{File.dirname(__FILE__)}/fixtures/range-error.json").read
       Validator.nu(
-      "http://hsivonen.iki.fi/test/moz/messages-types/range-error.html"
+      URI.parse("http://hsivonen.iki.fi/test/moz/messages-types/range-error.html")
       ).should == fixture
     end
 
     it "should receive a fatal error result" do
       fixture = File.open("#{File.dirname(__FILE__)}/fixtures/fatal-error.json").read
       Validator.nu(
-        "http://hsivonen.iki.fi/test/moz/messages-types/fatal.xhtml"
+        URI.parse("http://hsivonen.iki.fi/test/moz/messages-types/fatal.xhtml")
       ).should == fixture
     end
 

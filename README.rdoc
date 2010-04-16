@@ -6,10 +6,11 @@ ruby client library for the validator.nu HTML5 validation API
 
     gem install validator.nu
     require 'validator.nu'
-    Validator.nu('http://bbc.co.uk')
+    require 'uri'
+    Validator.nu(URI.parse('http://bbc.co.uk'))
 
     # If you want to use a private version of the validator.nu application
-    Validator.nu('http://bbc.co.uk', :host => 'validator.mine.com', :port => 8808)
+    Validator.nu(URI.parse('http://bbc.co.uk'), :host => 'validator.mine.com', :port => 8808)
     
 
     # or you can send a document to validate to the service directly
