@@ -58,7 +58,11 @@ describe Validator do
     end
 
     it "should receive a fatal error result" do
-      fixture = File.open("#{File.dirname(__FILE__)}/fixtures/fatal-error.json").read
+      # fixture = File.open("#{File.dirname(__FILE__)}/fixtures/fatal-error.json").read
+      file = File.new("#{File.dirname(__FILE__)}/fixtures/fatal-error.json", 'r')
+      parser = Yajl::Parser.new
+      fixture = parser.parse(file)
+      
       Validator.nu(
         URI.parse("http://hsivonen.iki.fi/test/moz/messages-types/fatal.xhtml")
       ).should == fixture

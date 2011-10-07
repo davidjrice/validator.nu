@@ -1,5 +1,9 @@
 $:.unshift File.dirname(__FILE__)
 
+require 'yajl/http_stream'
+require 'yajl/gzip'
+require 'yajl/deflate'
+
 require 'net/http'
 require 'cgi'
 require 'uri'
@@ -47,9 +51,9 @@ module Validator
 
     def nu(uri_or_document, options={})
       if uri_or_document.kind_of?(URI::HTTP)
-        get(uri_or_document, options)          
+        get(uri_or_document, options)
       else
-        post(uri_or_document, options)          
+        post(uri_or_document, options)
       end
     end
 
@@ -63,20 +67,24 @@ module Validator
       begin
         host = options[:host] || HOST
         port = options[:port] || PORT
-        http = Net::HTTP.new(host, port)
-        uri = "/?&doc=#{CGI::escape(url.to_s)}&out=json"
-
-        response = http.start do |http|
-          http.get(uri)
-        end
+        # http = Net::HTTP.new(host, port)
+        url = URI.parse "http://#{host}/?&doc=#{CGI::escape(url.to_s)}&out=json"
+        #STDERR.puts url
+        #url.port = port
         
-        if response.kind_of? Net::HTTPSuccess
-          return response.body
-        else
-          STDERR.puts response.body.inspect
-          raise RemoteException.new("#{response.code}: #{response.message}")
-        end
-
+        return Yajl::HttpStream.get(url)
+        
+      #  response = http.start do |http|
+      #    http.get(uri)
+      #  end
+      #  
+      #  if response.kind_of? Net::HTTPSuccess
+      #    return response.body
+      #  else
+      #    STDERR.puts response.body.inspect
+      #    raise RemoteException.new("#{response.code}: #{response.message}")
+      #  end
+      #
       rescue Exception => e
         STDERR.puts "Error contacting validator.nu: #{e}"
         STDERR.puts e.backtrace.join("\n"), 'debug'
