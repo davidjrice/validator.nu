@@ -1,5 +1,10 @@
 $:.unshift File.dirname(__FILE__)
 
+require 'yajl'
+require 'yajl/http_stream'
+require 'yajl/gzip'
+#require 'yajl/deflate'
+
 require 'net/http'
 require 'cgi'
 require 'uri'
@@ -85,42 +90,51 @@ module Validator
     end
 
     def post(document, options)
-      begin
+      # begin
         host = options[:host] || HOST
         port = options[:port] || PORT
         content_type = options[:content_type] || CONTENT_TYPE
         content_encoding = options[:content_encoding] || CONTENT_ENCODING
-        gzip = options[:gzip] || GZIP
 
-        if gzip
-          content_encoding = 'gzip'
-          output = StringIO.new
-          gz = Zlib::GzipWriter.new(output)
-          gz.write(document)
-          gz.close
-          document = output.string
-        end
+        opts = {:headers => {"Content-Type" => content_type, "Content-Encoding" => "gzip", "Accept-Encoding" => "gzip"}}
 
-        http = Net::HTTP.new(host, port)
-        uri = "/?out=json"
-        headers = { 'Content-Type' => content_type, 'Content-Encoding' => content_encoding }
+        url = URI.parse "http://#{host}/?out=json"
+        #url = URI.parse "http://postcatcher.in/catchers/4e8e607c28f281010000000d"
+        #url = URI.parse "http://localhost:61432/?out=json"
+        ## gzip = options[:gzip] || GZIP
+        # 
+        # if gzip
+        #   content_encoding = 'gzip'
+        output = StringIO.new
+        gz = Zlib::GzipWriter.new(output)
+        gz.write(document)
+        gz.close
 
-        response = http.start do |http|
-          http.post(uri, document, headers) 
-        end
-        
-        if response.kind_of? Net::HTTPSuccess
-          return response.body
-        else
-          STDERR.puts response.body.inspect
-          raise RemoteException.new("#{response.code}: #{response.message}")
-        end
+        # end
 
-      rescue Exception => e
-        STDERR.puts "Error contacting validator.nu: #{e}"
-        STDERR.puts e.backtrace.join("\n"), 'debug'
-        raise e
-      end
+        data =  Yajl::HttpStream.post(url, output.string, opts)
+        #STDERR.puts data.inspect
+        return data
+        # http = Net::HTTP.new(host, port)
+        # uri = "/?out=json"
+        # headers = { 'Content-Type' => content_type, 'Content-Encoding' => content_encoding }
+        # 
+        # response = http.start do |http|
+        #   http.post(uri, document, headers) 
+        # end
+        # 
+        # if response.kind_of? Net::HTTPSuccess
+        #   return response.body
+        # else
+        #   STDERR.puts response.body.inspect
+        #   raise RemoteException.new("#{response.code}: #{response.message}")
+        # end
+
+      # rescue Exception => e
+      #   STDERR.puts "Error contacting validator.nu: #{e}"
+      #   STDERR.puts e.backtrace.join("\n"), 'debug'
+      #   raise e
+      # end
     end
 
   end
