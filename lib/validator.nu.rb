@@ -48,6 +48,7 @@ module Validator
     HOST = "validator.nu"
     GZIP = false
     PORT = 80
+    LAX_CONTENT_TYPE = false
 
     def nu(uri_or_document, options={})
       if uri_or_document.kind_of?(URI::HTTP)
@@ -67,15 +68,19 @@ module Validator
       begin
         host = options[:host] || HOST
         port = options[:port] || PORT
+        laxtype = options[:lax_content_type] || LAX_CONTENT_TYPE
+
         # http = Net::HTTP.new(host, port)
-        url = URI.parse "http://#{host}/?&doc=#{CGI::escape(url.to_s)}&out=json"
+        uri = "http://#{host}/?&doc=#{CGI::escape(url.to_s)}&out=json"
+        uri += "&laxtype=yes" if laxtype
+        url = URI.parse uri
         #STDERR.puts url
         #url.port = port
         
         return Yajl::HttpStream.get(url)
         
       #  response = http.start do |http|
-      #    http.get(uri)
+      #    http.get(url.path)
       #  end
       #  
       #  if response.kind_of? Net::HTTPSuccess
@@ -99,6 +104,7 @@ module Validator
         content_type = options[:content_type] || CONTENT_TYPE
         content_encoding = options[:content_encoding] || CONTENT_ENCODING
         gzip = options[:gzip] || GZIP
+        laxtype = options[:lax_content_type] || LAX_CONTENT_TYPE
 
         if gzip
           content_encoding = 'gzip'
@@ -111,6 +117,7 @@ module Validator
 
         http = Net::HTTP.new(host, port)
         uri = "/?out=json"
+        uri += "&laxtype=yes" if laxtype
         headers = { 'Content-Type' => content_type, 'Content-Encoding' => content_encoding }
 
         response = http.start do |http|
