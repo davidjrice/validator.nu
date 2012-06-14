@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "validator.nu"
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["David Rice"]
@@ -62,5 +62,6 @@ Gem::Specification.new do |s|
     end
   else
   end
+  s.add_dependency "yajl-ruby"
 end
 
