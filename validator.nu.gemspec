@@ -62,6 +62,6 @@ Gem::Specification.new do |s|
     end
   else
   end
-  s.add_dependency "yajl-ruby"
+  s.add_dependency "yajl-ruby", '0.8.3'
 end
 
