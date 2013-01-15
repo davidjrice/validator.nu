@@ -10,7 +10,7 @@ begin
     gem.email = "me@davidjrice.co.uk"
     gem.homepage = "http://github.com/davidjrice/validator.nu"
     gem.authors = ["David Rice"]
-    gem.add_dependency "yajl-ruby"
+    gem.add_dependency "yajl-ruby", "1.1.0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new

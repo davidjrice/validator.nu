@@ -3,7 +3,7 @@ PATH
   specs:
     validator.nu (0.0.6)
       validator.nu
-      yajl-ruby
+      yajl-ruby (= 1.1.0)
 
 GEM
   remote: http://rubygems.org/

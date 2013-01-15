@@ -18,6 +18,9 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".document",
+    ".travis.yml",
+    "Gemfile",
+    "Gemfile.lock",
     "LICENSE",
     "README.rdoc",
     "Rakefile",
@@ -45,8 +48,6 @@ Gem::Specification.new do |s|
     "spec/fixtures/warning.json",
     "spec/spec_helper.rb",
     "spec/validator_spec.rb",
-    "test/helper.rb",
-    "test/test_validator.nu.rb",
     "validator.nu.gemspec"
   ]
   s.homepage = "http://github.com/davidjrice/validator.nu"
@@ -60,16 +61,22 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<validator.nu>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
-      s.add_runtime_dependency(%q<yajl-ruby>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 0"])
+      s.add_runtime_dependency(%q<yajl-ruby>, ["= 1.1.0"])
     else
       s.add_dependency(%q<validator.nu>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 0"])
-      s.add_dependency(%q<yajl-ruby>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 0"])
+      s.add_dependency(%q<yajl-ruby>, ["= 1.1.0"])
     end
   else
     s.add_dependency(%q<validator.nu>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 0"])
-    s.add_dependency(%q<yajl-ruby>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 0"])
+    s.add_dependency(%q<yajl-ruby>, ["= 1.1.0"])
   end
 end
 

@@ -125,6 +125,7 @@ module Validator
         end
         
         if response.kind_of? Net::HTTPSuccess
+          # TODO: should this not perhaps return parsed JSON like the get
           return response.body
         else
           STDERR.puts response.body.inspect
