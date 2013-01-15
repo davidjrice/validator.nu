@@ -1,5 +1,5 @@
-require 'rubygems'
-require 'rake'
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
 
 begin
   require 'jeweler'
@@ -10,6 +10,7 @@ begin
     gem.email = "me@davidjrice.co.uk"
     gem.homepage = "http://github.com/davidjrice/validator.nu"
     gem.authors = ["David Rice"]
+    gem.add_dependency "yajl-ruby"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -17,18 +18,17 @@ rescue LoadError
   puts "Jeweler (or a dependency) not available. Install it with: gem install jeweler"
 end
 
-require 'rake/testtask'
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
+RSpec::Core::RakeTask.new(:test) do |test|
+  # test.libs << 'lib' << 'spec'
+  test.pattern = 'spec/**/*_spec.rb'
   test.verbose = true
 end
 
 begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |test|
-    test.libs << 'test'
-    test.pattern = 'test/**/test_*.rb'
+    test.libs << 'lib' << 'spec'
+    test.pattern = 'spec/**/*_spec.rb'
     test.verbose = true
   end
 rescue LoadError
@@ -37,11 +37,11 @@ rescue LoadError
   end
 end
 
-task :test => :check_dependencies
+# task :test => :check_dependencies
 
 task :default => :test
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   version = File.exist?('VERSION') ? File.read('VERSION') : ""
 
