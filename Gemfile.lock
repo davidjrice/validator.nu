@@ -9,7 +9,16 @@ GEM
   remote: http://rubygems.org/
   specs:
     diff-lcs (1.1.3)
+    git (1.2.5)
+    jeweler (1.8.4)
+      bundler (~> 1.0)
+      git (>= 1.2.5)
+      rake
+      rdoc
+    json (1.7.6)
     rake (10.0.3)
+    rdoc (3.12)
+      json (~> 1.4)
     rspec (2.12.0)
       rspec-core (~> 2.12.0)
       rspec-expectations (~> 2.12.0)
@@ -24,6 +33,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  jeweler
   rake
+  rdoc
   rspec
   validator.nu!
